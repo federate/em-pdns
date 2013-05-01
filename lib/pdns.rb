@@ -1,4 +1,4 @@
-require 'ostruct'
+require 'hashie'
 require 'sinatra/base'
 require 'thin'
 require 'multi_json'
@@ -32,7 +32,7 @@ module PDNS
         trap("INT") { EM.stop }
 
         EM.open_keyboard(Pipe, :backend => backend)
-      }      
+      }
 
     end
   end

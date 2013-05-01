@@ -5,18 +5,20 @@ require 'bundler/setup'
 require File.expand_path('../lib/pdns', __FILE__)
 
 class ExampleBackend
-	include PDNS::Backend	
+	include PDNS::Backend
 end
 
 eb = ExampleBackend.new
 
-eb.set_answers({:qtype => 'A', :qname_matcher => /.*\.{1}example\.com$/, :domain_name => 'example.com'}) do |question|
-		a = PDNS::Answer.from_question question
-		a.content = '192.168.1.2' 
-		a.ttl = 60
-		[a]
-	end
+finder = lambda { |question|
+  a = PDNS::Answer.from_question question
+  a.content = '192.168.1.2'
+  a.ttl = 60
+  [a.to_result]
+}
+
+eb.set_answers({:qtype => 'A', :qname_matcher => Regexp.new(".*\.{0,1}example\.com$"), :domain_name => 'example.com'}, &finder)
 
 PDNS::Web.set :backend, eb
 
-run PDNS::Web 
+run PDNS::Web
