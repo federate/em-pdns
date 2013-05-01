@@ -4,4 +4,8 @@ require 'bundler/setup'
 
 require File.expand_path('../../lib/pdns', __FILE__)
 
-PDNS.run!
+class ExampleBackend
+	include PDNS::Backend
+end
+
+PDNS.run! :backend => ExampleBackend.new
