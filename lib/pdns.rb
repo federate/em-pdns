@@ -1,11 +1,15 @@
 require 'ostruct'
-require 'eventmachine'
+require 'sinatra/base'
+require 'thin'
+require 'multi_json'
+require 'yajl'
 require 'pdns/version'
 require 'pdns/exceptions'
 require 'pdns/answer'
 require 'pdns/question'
 require 'pdns/pipe'
 require 'pdns/backend'
+require 'pdns/web'
 
 STDOUT.sync = true
 STDERR.sync = true
@@ -28,7 +32,8 @@ module PDNS
         trap("INT") { EM.stop }
 
         EM.open_keyboard(Pipe, :backend => backend)
-      }
+      }      
+
     end
   end
 

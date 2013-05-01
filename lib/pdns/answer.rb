@@ -2,8 +2,7 @@ module PDNS
   class Answer < OpenStruct
 
   	def initialize(args = {})
-  		super args
-			#(:type, :qname, :qclass, :qtype, :ttl, :id, :content)
+  		super args			
   	end
 
   	def self.from_question(question)
@@ -12,7 +11,11 @@ module PDNS
             :qname => question.qname, 
             :qclass => question.qclass, 
             :qtype => question.qtype,     
-            :id => question.id    	           
+            :id => question.id    
+      elsif question.lookup_query?
+	    	new :question => question,
+            :qname => question.qname,             
+            :qtype => question.qtype             
 	   	elsif question.list_request?
 				new :question => question,
 						:id => question.id
@@ -25,6 +28,12 @@ module PDNS
 
     def to_s    	
       "#{self.type}\t#{self.qname}\t#{self.qclass}\t#{self.qtype}\t#{self.ttl}\t#{self.id}\t#{self.content}"
+    end
+
+    def to_json
+    	h = self.marshal_dump
+    	h.delete(:question)
+    	MultiJson.dump(h, :adapter => :yajl, :pretty => true)
     end
 
   end
