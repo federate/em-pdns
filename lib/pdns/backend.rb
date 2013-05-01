@@ -2,7 +2,7 @@ module PDNS
   module Backend
 
     def answer(opts = {})
-      Answer.new opts
+      Answer.new
     end
 
   end
