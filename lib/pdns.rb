@@ -1,5 +1,8 @@
+require 'ostruct'
 require 'eventmachine'
 require 'pdns/version'
+require 'pdns/exceptions'
+require 'pdns/answer'
 require 'pdns/question'
 require 'pdns/pipe'
 require 'pdns/backend'
@@ -12,7 +15,9 @@ module PDNS
   BANNER = "em-pdns #{VERSION}"
 
   module ClassMethods
-    def run!
+    def run!(options = {})
+    	backend = options[:backend]
+
       EM.run {
         EM.error_handler { |e|
           STDERR.puts e.message
@@ -22,7 +27,7 @@ module PDNS
         trap("TERM") { EM.stop }
         trap("INT") { EM.stop }
 
-        EM.open_keyboard(Pipe)
+        EM.open_keyboard(Pipe, :backend => backend)
       }
     end
   end
