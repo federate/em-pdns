@@ -43,11 +43,13 @@ module PDNS
       begin
         result = self.app.call(env)
       rescue Exception => e
-        SIPRedirector.logger.error e.message
-        SIPRedirector.logger.error e.backtrace.join("\n")
+        STDERR.puts e.message
+        STDERR.puts e.backtrace.join("\n")
       end
 
       callback.call(result) if callback
 
       result
     end
+  end
+end
