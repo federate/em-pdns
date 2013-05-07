@@ -17,6 +17,14 @@ finder = lambda { |question|
   [a.to_result]
 }
 
+stack = PDNS::Stack.new {
+  use HostGuardMiddleware, :account_manager => account_manager
+  use MessagePreprocessorMiddleware
+  use MessageGuardMiddleware
+  use InboundEndPointGroupMiddleware, :account_manager => account_manager
+}
+
+
 eb.set_answers({:qtype => 'A', :qname_matcher => Regexp.new(".*\.{0,1}example\.com$"), :domain_name => 'example.com'}, &finder)
 
 PDNS::Web.set :backend, eb
