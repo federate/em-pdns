@@ -11,11 +11,7 @@ module PDNS
             :qname => question.qname, 
             :qclass => question.qclass, 
             :qtype => question.qtype,     
-            :id => question.id    
-      elsif question.lookup_query?
-	    	new :question => question,
-            :qname => question.qname,             
-            :qtype => question.qtype             
+            :id => question.id              
 	   	elsif question.list_request?
 				new :question => question,
 						:id => question.id
