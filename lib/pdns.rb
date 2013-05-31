@@ -18,6 +18,8 @@ require 'pdns/pipe'
 STDOUT.sync = true
 STDERR.sync = true
 
+MultiJson.use :yajl
+
 module PDNS
 
   BANNER = "em-pdns #{VERSION}"

@@ -1,23 +1,18 @@
 module PDNS
-  class Response < Hash
-    include Hashie::Extensions::MethodAccess
-    include Hashie::Extensions::IndifferentAccess
-    include Hashie::Extensions::MergeInitializer
-    include Hashie::Extensions::KeyConversion
-    include Hashie::Extensions::DeepMerge
-    include Hashie::Extensions::Coercion
+  class Response
+    include Hashie::Hash
 
   	def initialize(args = {})
-  		super args			
+  		super
 
     	#new :question => question,
-      #    :qname => question.qname,             
-      #    :qtype => question.qtype   
-  	end  
-
-  	def to_json
-  		MultiJson.dump(self, :adapter => :yajl, :pretty => true)
+      #    :qname => question.qname,
+      #    :qtype => question.qtype
   	end
 
-  end  
-end  
+  	def to_json(options = {})
+  		MultiJson.dump(self, options)
+  	end
+
+  end
+end

@@ -18,10 +18,7 @@ finder = lambda { |question|
 }
 
 stack = PDNS::Stack.new {
-  use HostGuardMiddleware, :account_manager => account_manager
-  use MessagePreprocessorMiddleware
-  use MessageGuardMiddleware
-  use InboundEndPointGroupMiddleware, :account_manager => account_manager
+  
 }
 
 
