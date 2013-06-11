@@ -1,10 +1,6 @@
 module PDNS
   module Backend
 
-<<<<<<< HEAD
-    def answer(opts = {})
-      Answer.new
-=======
   	attr_accessor :logging
 
   	def logging_enabled?
@@ -36,7 +32,6 @@ module PDNS
     	answers += needle[:answer_block].call(question)
 
     	answers
->>>>>>> 779dfb0d4ef7d1a63075ec3213b288718509aff8
     end
 
     def set_answers(options = {}, &blk)

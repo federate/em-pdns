@@ -1,6 +1,5 @@
 module PDNS
-  class Request
-    include Hashie::Hash
+  class Request < Hashie::Mash
 
   	def initialize(args = {})
   		super

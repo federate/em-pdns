@@ -1,6 +1,5 @@
 module PDNS
-  class Response
-    include Hashie::Hash
+  class Response < Hashie::Mash
 
   	def initialize(args = {})
   		super
